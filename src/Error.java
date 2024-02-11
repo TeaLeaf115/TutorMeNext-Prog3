@@ -15,17 +15,14 @@ public class Error {
 	// constructors
 	
 	public Error() {
-		return;
 	}
 	
 	public Error(String aString) {
 		setError(aString);
-		return;
 	}
 	
 	public Error(Error anError) {
 		myError = anError.myError;
-		return;
 	}
 	
 	// accessor
@@ -40,7 +37,6 @@ public class Error {
 		if (!LegalError(error))
 			throw new IllegalStateException("Error .setError(), illegal value for Error.");
 		myError = error;
-		return;
 	}
 	
 	public String toString() {

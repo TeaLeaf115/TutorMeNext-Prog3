@@ -27,3 +27,12 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+
+### Replit ###
+/target/
+/.upm/
+pom.xml
+.replit
+replit.nix
+*.class
+.breakpoints
