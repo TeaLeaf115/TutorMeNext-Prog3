@@ -8,16 +8,20 @@ public class Result {
 	private int numHelped;
 	private int totalWaitTime;
 
+	public Result() {
+		
+	}
+
 	public Result(int numHelped, int totalWaitTime) {
 		this.numHelped = numHelped;
 		this.totalWaitTime = totalWaitTime;
 	}
 
-	public int getNumHelped() {
+	public int getNumberHelped() {
 		return numHelped;
 	}
 
-	public void setNumHelped(int numHelped) {
+	public void setNumberHelped(int numHelped) {
 		this.numHelped = numHelped;
 	}
 

@@ -38,9 +38,12 @@ public class Experience {
 	
 	public void setExperience(String experience) {
 		if (!LegalExperience(experience))
-			throw new IllegalStateException("Experience .setExperience(), illegal value for experience.");
+			throw new IllegalStateException("Experience.setExperience(), illegal value for experience.");
 		myExperience = experience;
-		return;
+	}
+
+	public void setExperience(Experience experience) {
+		myExperience = experience.toString();
 	}
 	
 	public String toString() {

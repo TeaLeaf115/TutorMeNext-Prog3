@@ -20,14 +20,35 @@ class HelpRequest {
 	public HelpRequest(Queue<String> inp) {
 		for (int i = 0; i < 6; i++) {
 			switch (i) {
-				case 0 -> time = new Time (inp.remove());
-				case 1 -> name = inp.remove();
-				case 2 -> demeanor = new Demeanor(inp.remove());
-				case 3 -> error = new Error(inp.remove());
-				case 4 -> minutesWithHelp = Integer.parseInt(inp.remove());
-				case 5 -> minutesWithoutHelp = Integer.parseInt(inp.remove());
+				case 0:
+					time = new Time (inp.remove());
+					break;
+				case 1:
+					name = inp.remove();
+					break;
+				case 2:
+					demeanor = new Demeanor(inp.remove());
+					break;
+				case 3:
+					error = new Error(inp.remove());
+					break;
+				case 4:
+					minutesWithHelp = Integer.parseInt(inp.remove());
+					break;
+				case 5:
+					minutesWithoutHelp = Integer.parseInt(inp.remove());
+					break;
 			}
 		}
+	}
+
+	public HelpRequest() {
+		time = new Time(00, 00);
+		name = "Test Student";
+		demeanor = new Demeanor("runtime");
+		error = new Error();
+		minutesWithHelp = 20;
+		minutesWithoutHelp = 24;
 	}
 	
 	public Time getTime() {

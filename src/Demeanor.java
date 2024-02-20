@@ -37,9 +37,9 @@ public class Demeanor {
 	
 	public void setDemeanor(String demeanor) {
 		if (!LegalDemeanor(demeanor))
-			throw new IllegalStateException("Demeanor .setDeamor(), illegal value for demeanor.");
+			demeanor = "undefined";
+			// throw new IllegalStateException("Demeanor.setDeamor(), illegal value for demeanor.");
 		myDemeanor = demeanor;
-		return;
 	}
 	
 	public String toString() {

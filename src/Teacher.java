@@ -5,12 +5,18 @@ class Teacher {
 	private ArrayStack<HelpRequest> requestStack;
 	private ListQueue<HelpRequest> requestQueue;
 
+	public Teacher() {
+		this.requestStack = new ArrayStack<>();
+		this.requestQueue = new ListQueue<>();
+		this.currRequest = new HelpRequest();
+	}
+	
 	public Teacher(String name, Experience experience) {
 		this.name = name;
 		this.experience = experience;
 		this.requestStack = new ArrayStack<>();
 		this.requestQueue = new ListQueue<>();
-		this.currRequest = new HelpRequest<>();
+		this.currRequest = new HelpRequest();
 	}
 
 	public void addHelpRequest(HelpRequest hr) {
@@ -36,8 +42,12 @@ class Teacher {
 		this.experience = experience;
 	}
 
-	public HelpRequest getCurrRequest() {
+	public HelpRequest getCurrentRequest() {
 		return currRequest;
+	}
+
+	public void setCurrentRequest(HelpRequest currRequest) {
+		currRequest = this.currRequest;
 	}
 
 	public ArrayStack<HelpRequest> getRequestStack() {
