@@ -1,0 +1,36 @@
+15:10
+Polite Compiling
+polite
+compiling
+4
+8
+15:15
+Rude Linking
+rude
+linking
+2
+4
+15:17
+Polite Linking
+polite
+linking
+1
+2
+15:20
+Rude Compiling
+rude
+compiling
+1
+2
+15:20
+Polite Runtime
+polite
+runtime
+2
+4
+15:22
+Rude Runtime
+rude
+runtime
+10
+20
