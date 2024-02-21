@@ -21,7 +21,11 @@ class HelpRequest {
 		for (int i = 0; i < 6; i++) {
 			switch (i) {
 				case 0:
-					time = new Time (inp.remove());
+					String t = inp.remove();
+					int delim = t.indexOf(':');
+					int h = Integer.parseInt(t.substring(0, delim));
+					int m = Integer.parseInt(t.substring(delim+1));
+					time = new Time (h, m);
 					break;
 				case 1:
 					name = inp.remove();
@@ -67,16 +71,16 @@ class HelpRequest {
 		this.name = name;
 	}
 	
-	public Demeanor getDemeanor() {
-		return demeanor;
+	public String getDemeanor() {
+		return demeanor.getDemeanor();
 	}
 	
 	public void setDemeanor(Demeanor demeanor) {
 		this.demeanor = demeanor;
 	}
 	
-	public Error getError() {
-		return error;
+	public String getError() {
+		return error.getError();
 	}
 	
 	public void setError(Error error) {
@@ -97,5 +101,16 @@ class HelpRequest {
 	
 	public void setMinutesWithoutHelp(int minutesWithoutHelp) {
 		this.minutesWithoutHelp = minutesWithoutHelp;
+	}
+	
+	public String toString() {
+		return
+				"Time: " + time +
+				"\nName: " + name +
+				"\nDemeanor: " + demeanor +
+				"\nError: " + error +
+				"\nMinutes With Help: " + minutesWithHelp +
+				"\nMinutes Without Help: " + minutesWithoutHelp;
+				
 	}
 }

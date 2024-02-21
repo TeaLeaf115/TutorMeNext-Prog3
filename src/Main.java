@@ -2,7 +2,6 @@ import java.util.Scanner;
 import java.util.Queue;
 import java.util.LinkedList;
 import java.io.File;
-import java.io.FileNotFoundException;
 
 public class Main {
 	
@@ -18,7 +17,7 @@ public class Main {
 	/*
 		preconditions:	args, none.  Any file actually opened as a
 			request file is formatted as prescribed.
-		postconditions:  None.
+		post conditions:  None.
 	*/
 	public static void main(String [] args) {
 		Welcome();
@@ -31,8 +30,8 @@ public class Main {
 		// else {
 			ListQueue<HelpRequest> fileQueue = FillFileQueue(requestFile);
 			Teacher teacher = GetTeacherInfo();
-			Time startTime = GetTime("start", EARLIEST_TIME, LATEST_TIME);
-			Time endTime = GetTime("end", startTime, LATEST_TIME);
+			Time startTime = GetTime("start", EARLIEST_TIME);
+			Time endTime = GetTime("end", startTime);
 			Result results = new Result();
 			// Scanner printer = new Scanner(PRINTER_NAME);
 			PrintHeading(teacher, startTime, endTime);
@@ -54,7 +53,7 @@ public class Main {
 
 	/*
 		preconditions:	None.
-		postconditions:  None.
+		post conditions:  None.
 	*/
 	private static void Welcome() {
 		clearScreen();
@@ -68,7 +67,7 @@ public class Main {
 
 	/*
 		preconditions:	None.
-		postconditions:  Returns a possible file name.
+		post conditions:  Returns a possible file name.
 	*/
 	private static String GetFileName() {
 		clearScreen();
@@ -81,7 +80,7 @@ public class Main {
 
 	/*
 		preconditions:	error has been filled.
-		postconditions:  None.
+		post conditions:  None.
 	*/
 	private static void ErrorMessage(String error) {
 		clearScreen();
@@ -93,11 +92,8 @@ public class Main {
 	}
 
 	/*
-		preconditions:	requestFile has been opened for reading and
-			is foramtted properly.
-		postconditions:  Returns a ListQueue that has been filled
-			with help requests from the file.  The requestFile
-			has been read to through the end.
+		preconditions:	requestFile has been opened for reading and is formatted properly.
+		post conditions:  Returns a ListQueue that has been filled with help requests from the file.  The requestFile has been read to through the end.
 	*/
 	private static ListQueue<HelpRequest> FillFileQueue(Scanner requestFile)	{
 		clearScreen();
@@ -106,29 +102,18 @@ public class Main {
 		System.out.println();
 		System.out.print("reading");
 		ListQueue<HelpRequest> fileQueue = new ListQueue<>();
-		int numEntries = 0;
-		while (requestFile.hasNext())
-			numEntries++;
-
-		numEntries /= 6;
-
-		for (int entry = 0; entry < numEntries; entry++) {
-			fileQueue.add(ReadHelpRequest(requestFile));
-		}
-		
-		// while (!requestFile.hasNextLine()) {
-		// 	HelpRequest helpRequest = ReadHelpRequest(requestFile);
-		// 	fileQueue.add(helpRequest);
-		// 	System.out.print(".");
-		// }
-		// System.out.println("Finished");
+		 while (requestFile.hasNextLine()) {
+			 fileQueue.add(ReadHelpRequest(requestFile));
+		 	System.out.print(".");
+		 }
+//		 System.out.println(fileQueue.peek());
 		inp.nextLine();
 		return fileQueue;
 	}
 
 	/*
 		preconditions:  None.
-		postconditions:  A Teacher is returned with all fields filled
+		post conditions:  A Teacher is returned with all fields filled
 			with valid values.
 	*/
 	private static Teacher GetTeacherInfo() {
@@ -137,7 +122,7 @@ public class Main {
 		System.out.println("=========================");
 		System.out.println();
 		Teacher teacher = new Teacher();
-		System.out.print("Enter the teacher\'s name:  ");
+		System.out.print("Enter the teacher's name:  ");
 		teacher.setName(inp.nextLine());
 		System.out.println();
 		
@@ -153,11 +138,11 @@ public class Main {
 
 	/*
 		preconditions:	whichTime is a prompt.  earliestTime <= latestTime.
-		postconditions:  A Time is returned that is >= earliestTime and
+		post conditions:  A Time is returned that is >= earliestTime and
 			<= latestTime.  whichTime, earliestTime, and latestTime are not 
 			changed.
 	*/
-	private static Time GetTime(String whichTime, Time earliestTime, Time latestTime) {
+	private static Time GetTime(String whichTime, Time earliestTime) {
 		clearScreen();
 		System.out.println("Enter time");
 		System.out.println("==========");
@@ -166,19 +151,19 @@ public class Main {
 		do {
 			String timeString;
 			do {
-				System.out.print("Enter " + whichTime + " time (" + earliestTime + ".." + latestTime + "):  ");
+				System.out.print("Enter " + whichTime + " time (" + earliestTime + ".." + Main.LATEST_TIME + "):  ");
 				timeString = inp.nextLine();
 				System.out.println();
 			} while (!Time.LegalTimeString(timeString));
 			time.setFromString(timeString);
-		} while (time.compareTo(earliestTime) < 0 || time.compareTo(latestTime) > 0);
+		} while (time.compareTo(earliestTime) < 0 || time.compareTo(Main.LATEST_TIME) > 0);
 		return time;
 	}
 
 	/*
 		preconditions:	teacher, startTime, and endTime have been filled.
 			printer is opened for writing.
-		postconditions:  teacher, startTime, endTime are unchanged, the
+		post conditions:  teacher, startTime, endTime are unchanged, the
 			printer has had a heading sent.
 	*/
 	private static void PrintHeading(Teacher teacher, Time startTime, Time endTime) {
@@ -201,9 +186,9 @@ public class Main {
 
 	/*
 		preconditions:	fileQueue has been filled from a file
-			of HelpRequests, teacher, startTime, and endTime have been fileed,
+			of HelpRequests, teacher, startTime, and endTime have been filed,
 			results has been initialized, and printer is opened for output.
-		postconditions:  The fileQueue has been processed through any
+		post conditions:  The fileQueue has been processed through any
 			HelpRequests with times <= endTime.  startTime and endTime have
 			not been changed, results has been updated to reflect the processing
 			as has the printer.
@@ -223,12 +208,6 @@ public class Main {
 				Thread.sleep(PAUSE_LENGTH);
 			} catch(Exception e) {e.printStackTrace();}
 			RunAndPrintOneMinute(currentTime, teacher, fileQueue, results);
-
-
-			/*
-			PREVIOUS CODE CHUNK vvvvv:
-				currentTime = currentTime.nextMinute();
-			*/
 			currentTime.nextMinute();
 		}
 		System.out.println();
@@ -241,7 +220,7 @@ public class Main {
 		preconditions:  teacher and results are in a condition 
 			resulting from running the simulation.  printer
 			is opened and ready for output.
-		postconditions:teacher and results, none.  printer
+		post conditions:teacher and results, none.  printer
 			has had a summary printed to it.
 	*/
 	private static void PrintWrapUp(Teacher teacher, Result results) {
@@ -261,34 +240,22 @@ public class Main {
 	/*
 		preconditions:  requestFile is opened for reading and
 			formatted properly.
-		postconditions:  requestFile has been read past a HelpRequest.
+		post conditions:  requestFile has been read past a HelpRequest.
 			That HelpRequest is returned.
 	*/
 	private static HelpRequest ReadHelpRequest(Scanner requestFile) {
 		Queue<String> q = new LinkedList<>();
 		for (int i = 0; i < 6; i++) {
 			q.add(requestFile.nextLine());
+			System.out.println(true);
 		}
-		
-		HelpRequest helpRequest = new HelpRequest(q);
-		// Time aTime = new Time();
-		// String timeString = requestFile.nextLine();
-		// aTime.setFromString(timeString);
-		// helpRequest.setTime(aTime);
-		// helpRequest.setName(requestFile.nextLine());
-		// helpRequest.setDemeanor(new Demeanor(requestFile.nextLine()));
-		// helpRequest.setError(new Error(requestFile.nextLine()));
-		// helpRequest.setMinutesWithHelp(requestFile.nextInt());
-		// requestFile.nextLine();
-		// helpRequest.setMinutesWithoutHelp(requestFile.nextInt());
-		// requestFile.nextLine();
-		return helpRequest;
+		return new HelpRequest(q);
 	}
 
 	/*
 		preconditions:  teacher has been filled.  printer is opened
 			for output.
-		postconditions:  teacher is unchanged.  The contents of teacher 
+		post conditions:  teacher is unchanged.  The contents of teacher
 			have been sent to printer.
 	*/
 	private static void PrintTeacher(Teacher teacher) {
@@ -308,16 +275,16 @@ public class Main {
 		preconditions:  currentTime is the current time, teacher,
 			fileQueue, and results reflect all previous processing, 
 			printer is ready for output.
-		postconditions:   currentTime, unchanged.  teacher,
+		post conditions:   currentTime, unchanged.  teacher,
 			fileQueue, results, and printer have been updated to reflect
 			one minute of processing, 
 			printer is ready for output.
 	*/
-	private static void RunAndPrintOneMinute(Time currentTime, Teacher teacher, ListQueue<HelpRequest========> fileQueue, Result results) {
+	private static void RunAndPrintOneMinute(Time currentTime, Teacher teacher, ListQueue<HelpRequest> fileQueue, Result results) {
 		System.out.println("Time:  " + currentTime + "    ");
-		if (!fileQueue.isEmpty() && ((HelpRequest) fileQueue.peek()).getTime().compareTo(currentTime) <= 0) {
-			while (!fileQueue.isEmpty() && ((HelpRequest) fileQueue.peek()).getTime().compareTo(currentTime) <= 0) {
-				HelpRequest request = (HelpRequest) fileQueue.remove();
+		if (!fileQueue.isEmpty() && fileQueue.peek().getTime().compareTo(currentTime) <= 0) {
+			while (!fileQueue.isEmpty() && fileQueue.peek().getTime().compareTo(currentTime) <= 0) {
+				HelpRequest request = fileQueue.remove();
 				System.out.print("\t" + teacher.getName() + "\" accepts request:  \"");
 				System.out.print(request.getName() + "\" @ " + request.getTime());
 				System.out.println(", " + request.getDemeanor());
@@ -331,7 +298,7 @@ public class Main {
 	/*
 		preconditions:  results reflects all previous processing.  printer
 			is ready for output.
-		postconditions:  results is unchanged.  printer has had
+		post conditions:  results is unchanged.  printer has had
 			a summary sent to it.
 	*/
 	private static void PrintResult(Result results) {
@@ -352,7 +319,7 @@ public class Main {
 
 	/*
 		preconditions:  request is filled.  printer is ready for output.
-		postconditions:  request is unchanged.  printer has had the request 
+		post conditions:  request is unchanged.  printer has had the request
 			sent to it.
 	*/
 	private static void	PrintRequest(HelpRequest request) {
@@ -365,14 +332,14 @@ public class Main {
 
 	/*
 		preconditions:  stack is filled.  printer is ready for output.
-		postconditions:  stack is unchanged!!! printer has had the stack 
+		post conditions:  stack is unchanged!!! printer has had the stack
 			sent to it.
 	*/
 	private static void	PrintStack(ArrayStack<HelpRequest> stack) {
 		System.out.println("Request Stack:  ");
 		ArrayStack<HelpRequest> tempStack = new ArrayStack<>();
 		while (!stack.isEmpty()) {
-			HelpRequest request = (HelpRequest)stack.pop();
+			HelpRequest request = stack.pop();
 			tempStack.push(request);
 			PrintRequest(request);
 		}
@@ -382,14 +349,14 @@ public class Main {
 
 	/*
 		preconditions:  queue is filled.  printer is ready for output.
-		postconditions:  queue is unchanged!!! printer has had the queue 
+		post conditions:  queue is unchanged!!! printer has had the queue
 			sent to it.
 	*/
 	private static void	PrintQueue(ListQueue<HelpRequest> queue) {
 		System.out.println("Request Queue:  ");
 		ListQueue<HelpRequest> tempQueue = new ListQueue<>();
 		while (!queue.isEmpty()) {
-			HelpRequest request = (HelpRequest) queue.remove();
+			HelpRequest request = queue.remove();
 			tempQueue.add(request);
 			PrintRequest(request);
 		}
@@ -403,7 +370,7 @@ public class Main {
 	/*
 		preconditions:  request is filled.  teacher reflects all
 			previous processing.
-		postconditions:  request is unchanged.  teacher has added
+		post conditions:  request is unchanged.  teacher has added
 			the request to the stack or queue as appropriate.
 	*/
 	private static void TeacherAcceptsRequest(HelpRequest request, Teacher teacher) {
@@ -438,7 +405,7 @@ public class Main {
 	/*
 		preconditions:  currentTime is the current time, teacher, results, 
 			and printer all reflect previous processing.
-		postconditions:  currentTime is unchanged.  teacher, results, 
+		post conditions:  currentTime is unchanged.  teacher, results,
 			and printer all reflect the process of Help.
 	*/
 	private static void Help(Time currentTime, Teacher teacher, Result results) {
@@ -455,7 +422,7 @@ public class Main {
 		}
 		if (teacher.getCurrentRequest().getMinutesWithHelp() == 0) {
 			if (!teacher.getRequestStack().isEmpty()) {
-				teacher.setCurrentRequest((HelpRequest) teacher.getRequestStack().pop());
+				teacher.setCurrentRequest(teacher.getRequestStack().pop());
 				results.setNumberHelped(results.getNumberHelped() + 1);
 				results.setTotalWaitTime(results.getTotalWaitTime() + currentTime.inMinutes() - teacher.getCurrentRequest().getTime().inMinutes());
 				System.out.print("\tFrom stack:  \"" + teacher.getCurrentRequest().getName());
@@ -463,7 +430,7 @@ public class Main {
 				System.out.println(teacher.getCurrentRequest().getError());
 			}
 			else if (!teacher.getRequestQueue().isEmpty()) {
-				teacher.setCurrentRequest((HelpRequest) teacher.getRequestQueue().remove());
+				teacher.setCurrentRequest(teacher.getRequestQueue().remove());
 				results.setNumberHelped(results.getNumberHelped() + 1);
 				results.setTotalWaitTime(results.getTotalWaitTime() + currentTime.inMinutes() - teacher.getCurrentRequest().getTime().inMinutes());
 				System.out.print("\tFrom queue:  \"" + teacher.getCurrentRequest().getName());
