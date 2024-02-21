@@ -51,8 +51,8 @@ class HelpRequest {
 		name = "Test Student";
 		demeanor = new Demeanor("runtime");
 		error = new Error();
-		minutesWithHelp = 20;
-		minutesWithoutHelp = 24;
+		minutesWithHelp = 0;
+		minutesWithoutHelp = 0;
 	}
 	
 	public Time getTime() {
