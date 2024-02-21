@@ -2,8 +2,8 @@ class Teacher {
 	private String name;
 	private Experience experience;
 	private HelpRequest currRequest;
-	private ArrayStack<HelpRequest> requestStack;
-	private ListQueue<HelpRequest> requestQueue;
+	private final ArrayStack<HelpRequest> requestStack;
+	private final ListQueue<HelpRequest> requestQueue;
 
 	public Teacher() {
 		this.requestStack = new ArrayStack<>();
@@ -34,8 +34,8 @@ class Teacher {
 		this.name = name;
 	}
 
-	public Experience getExperience() {
-		return experience;
+	public String getExperience() {
+		return experience.getExperience();
 	}
 
 	public void setExperience(Experience experience) {

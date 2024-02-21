@@ -15,17 +15,14 @@ public class Experience {
 	// constructors
 	
 	public Experience() {
-		return;
 	}
 	
 	public Experience(String aString) {
 		setExperience(aString);
-		return;
 	}
 	
 	public Experience(Experience anExperience) {
 		myExperience = anExperience.myExperience;
-		return;
 	}
 	
 	// accessor

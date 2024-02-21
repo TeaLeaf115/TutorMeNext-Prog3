@@ -14,17 +14,14 @@ public class Demeanor {
 	// constructors
 	
 	public Demeanor() {
-		return;
 	}
 	
 	public Demeanor(String aString) {
 		setDemeanor(aString);
-		return;
 	}
 	
 	public Demeanor(Demeanor aDemeanor) {
 		myDemeanor = aDemeanor.myDemeanor;
-		return;
 	}
 	
 	// accessor
@@ -54,7 +51,6 @@ public class Demeanor {
 		Demeanor copyDemeanor = new Demeanor(RUDE);
 		System.out.println("Copy demeanor is " + copyDemeanor.getDemeanor());
 		// Demeanor illegalDemeanor = new Demeanor("Popular");
-		return;
 	}
 	
 }
